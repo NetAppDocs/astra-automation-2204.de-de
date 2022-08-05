@@ -1,0 +1,94 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_clone_app_snapshot.html 
+keywords:  
+summary:  
+---
+= Klonen einer verwalteten Anwendung aus einem Snapshot
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Sie können eine neue Anwendung erstellen, indem Sie sie über einen App-Snapshot klonen.
+
+
+
+=== Bevor Sie beginnen
+
+Beachten Sie Folgendes zu diesem Workflow:
+
+* Ein App-Snapshot wird verwendet
+* Der Klonvorgang wird im selben Cluster durchgeführt
+
+
+
+NOTE: Zum Klonen einer App auf einem anderen Cluster müssen Sie den aktualisieren `clusterId` Parameter in den JSON-Input, wie es für Ihre Umgebung geeignet ist.
+
+
+
+=== 1. Wählen Sie die verwaltete App zum Klonen aus
+
+Führen Sie den Workflow aus link:wf_list_man_apps.html["Listen Sie die verwalteten Apps auf"] Und wählen Sie die Anwendung aus, die Sie klonen möchten. Für DEN REST-Aufruf, der zum Klonen der App verwendet wird, sind mehrere Ressourcenwerte erforderlich.
+
+
+
+=== 2. Wählen Sie den zu verwendenden Snapshot aus
+
+Führen Sie den Workflow aus link:wf_list_snapshots.html["Listen Sie die Snapshots auf"] Und wählen Sie den gewünschten Snapshot aus.
+
+
+
+=== 3. Die App klonen
+
+Führen Sie den folgenden REST-API-Aufruf aus.
+
+[cols="25,75"]
+|===
+| HTTP-Methode | Pfad 
+
+
+| POST | /Account/{AccountID}/k8s/v1/manageApps 
+|===
+
+
+===== Zusätzliche Eingabeparameter
+
+Zusätzlich zu den Parametern, die bei allen REST-API-Aufrufen üblich sind, werden die folgenden Parameter auch in den Curl-Beispielen für diesen Schritt verwendet.
+
+[cols="25,10,10,55"]
+|===
+| Parameter | Typ | Erforderlich | Beschreibung 
+
+
+| JSON | Text | Ja. | Stellt die Parameter für die geklonte App bereit. Siehe das folgende Beispiel. 
+|===
+
+
+===== JSON-Eingabebeispiel
+
+[source, json]
+----
+{
+  "type": "application/astra-managedApp",
+  "version": "1.0",
+  "name": "postgres1-postgresql-clone",
+  "clusterID": "30880586-d579-4d27-930f-a9633e59173b",
+  "sourceClusterID": "30880586-d579-4d27-930f-a9633e59173b",
+  "namespace": "davidns-postgres-app",
+  "snapshotID": "e24515bd-a28e-4b28-b832-f3c74dbf32fb",
+  "sourceAppID": "e591ee59-ea90-4a9f-8e6c-d2b6e8647096"
+}
+----
+
+
+===== Curl Beispiel: Klonen einer App aus einem Snapshot
+
+[source, curl]
+----
+curl --location -i --request POST 'https://astra.netapp.io/accounts/<ACCOUNT_ID>/k8s/v1/managedApps' --header 'Content-Type: application/astra-managedApp+json' --header '*/*' --header 'Authorization: Bearer <API_TOKEN>' --d @JSONinput
+----

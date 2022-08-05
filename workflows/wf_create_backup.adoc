@@ -1,0 +1,73 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_create_backup.html 
+keywords:  
+summary:  
+---
+= Backup für eine gemanagte Applikation erstellen
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Sie können ein Backup für eine bestimmte gemanagte Applikation erstellen. Sie können das Backup zum Wiederherstellen oder Klonen der App verwenden.
+
+
+
+=== Bevor Sie beginnen
+
+Sie müssen über die ID der verwalteten App verfügen, für die Sie ein Backup erstellen möchten. Bei Bedarf können Sie den Workflow verwenden link:wf_list_man_apps.html["Listen Sie die verwalteten Apps auf"] Zum Auffinden der Anwendung.
+
+
+
+=== 1. Erstellen Sie ein Backup
+
+Führen Sie den folgenden REST-API-Aufruf aus.
+
+[cols="25,75"]
+|===
+| HTTP-Methode | Pfad 
+
+
+| POST | /Accounts/{Account_id}/k8s/v1/managedaApps/{managedApp_id}/appBackups 
+|===
+
+
+===== Zusätzliche Eingabeparameter
+
+Zusätzlich zu den Parametern, die bei allen REST-API-Aufrufen üblich sind, werden die folgenden Parameter auch in den Curl-Beispielen für diesen Schritt verwendet.
+
+[cols="25,10,10,55"]
+|===
+| Parameter | Typ | Erforderlich | Beschreibung 
+
+
+| Verwaltete App-id | Pfad | Ja. | Gibt die gemanagte Applikation an, in der das Backup erstellt wird. 
+
+
+| JSON | Text | Ja. | Stellt die Parameter für die Sicherung bereit. Siehe das folgende Beispiel. 
+|===
+
+
+===== JSON-Eingabebeispiel
+
+[source, json]
+----
+{
+  "type": "application/astra-appBackup",
+  "version": "1.0",
+  "name": "backup-david-1"
+}
+----
+
+
+===== Curl Beispiel: Erstellen Sie ein Backup für die App
+
+[source, curl]
+----
+curl --location -i --request POST 'https://astra.netapp.io/accounts/<ACCOUNT_ID>/k8s/v1/managedApps/<MANAGED_APP_ID>/appBackups' --header 'Content-Type: application/astra-appBackup+json' --header 'Accept: */*' --header 'Authorization: Bearer <API_TOKEN>' --d @JSONinput
+----

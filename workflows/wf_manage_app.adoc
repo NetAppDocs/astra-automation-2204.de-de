@@ -1,0 +1,70 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_manage_app.html 
+keywords:  
+summary:  
+---
+= Eine App verwalten
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Sie können eine gemanagte Anwendung auf Basis einer bereits bekannten Astra-Anwendung erstellen. Wenn eine Applikation gemanagt wird, können Sie die Daten durch regelmäßige Backups und Snapshots sichern.
+
+
+
+=== Bevor Sie beginnen
+
+Sie müssen über die ID der erkannten App verfügen, die Sie verwalten möchten. Bei Bedarf können Sie den Workflow verwenden link:wf_list_unman_apps.html["Listen Sie die nicht verwalteten Apps auf"] Zum Auffinden der Anwendung.
+
+
+
+=== 1. Verwalten Sie die Anwendung
+
+Führen Sie den folgenden REST-API-Aufruf aus.
+
+[cols="25,75"]
+|===
+| HTTP-Methode | Pfad 
+
+
+| POST | /Account/{AccountID}/k8s/v1/manageApps 
+|===
+
+
+===== Zusätzliche Eingabeparameter
+
+Zusätzlich zu den Parametern, die bei allen REST-API-Aufrufen üblich sind, werden die folgenden Parameter auch in den Curl-Beispielen für diesen Schritt verwendet.
+
+[cols="25,10,10,55"]
+|===
+| Parameter | Typ | Erforderlich | Beschreibung 
+
+
+| JSON | Text | Ja. | Stellt die Parameter bereit, die zur Identifizierung der zu verwaltenden Anwendung erforderlich sind. Siehe das folgende Beispiel. 
+|===
+
+
+===== JSON-Eingabebeispiel
+
+[source, json]
+----
+{
+  "type": "application/astra-managedApp",
+  "version": "1.1",
+  "id": "7da20fff-c69d-4270-bb0d-a4f91c5a1333"
+}
+----
+
+
+===== Curl Beispiel: Eine App verwalten
+
+[source, curl]
+----
+curl --location -i --request POST 'https://astra.netapp.io/accounts/<ACCOUNT_ID>/k8s/v1/managedApps' --header 'Content-Type: application/astra-managedApp+json' --header 'Accept: */*' --header 'Authorization: Bearer <API_TOKEN>'  --d @JSONinput
+----
