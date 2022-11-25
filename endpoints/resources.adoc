@@ -160,12 +160,6 @@ Die Endpunkte der Topologieressourcen bieten Zugriff auf nicht verwaltete Applik
 | Storage-Klasse | 21.08 | Ressourcen der Storage-Klasse stellen unterschiedliche Storage-Klassen oder -Typen dar, die für ein bestimmtes gemanagtes Cluster erkannt und verfügbar sind. 
 
 
-| Storage-Gerät | 21.12 | Die Storage-Geräteressourcen bieten Zugriff auf die Festplatten, die mit einem bestimmten Storage-Node für Storage-Back-Ends vom Typ Astra Data Store (ADS) verbunden sind. Ein ADS Storage Back-End wird als Kubernetes-Cluster implementiert. 
-
-
-| Storage-Node | 21.12 | Die Storage-Node-Ressourcen stellen die Nodes dar, die Teil eines ADS-Clusters sind. 
-
-
 | Datenmenge | 21.04 | Die Volume-Ressourcen stellen die Kubernetes Storage Volumes dar, die mit den gemanagten Applikationen verknüpft sind. 
 |===
 
